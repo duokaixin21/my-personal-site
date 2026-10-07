@@ -1,0 +1,44 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Layout title="文章">
+  <section class="px-8 pt-32 pb-16">
+    <h1 class="font-display font-extralight leading-[0.9] tracking-tighter uppercase text-[2.5rem] md:text-[6rem] lg:text-[7rem]">
+      文章
+    </h1>
+  </section>
+
+  <div class="px-8">
+    <div class="hairline"></div>
+  </div>
+
+  <section class="px-8 py-16">
+    <ul class="divide-y divide-[#3a3a3a] border-y border-[#3a3a3a]">
+      {posts.map((post) => (
+        <li>
+          <a
+            href={`/blog/${post.id}/`}
+            class="flex flex-col md:flex-row md:items-baseline justify-between gap-2 py-8 group"
+          >
+            <span class="text-2xl md:text-3xl font-display font-normal group-hover:text-[#a6a6a6] transition-colors">
+              {post.data.title}
+            </span>
+            <span class="text-sm text-[#a6a6a6] tracking-wide">
+              {post.data.date.toISOString().slice(0, 10)}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    {posts.length === 0 && (
+      <p class="text-[#a6a6a6]">还没有文章。</p>
+    )}
+  </section>
+</Layout>

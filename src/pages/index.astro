@@ -1,17 +1,178 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 
+const word = 'BUILD';
+
+const allPosts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const latestPosts = allPosts.slice(0, 3);
+const postsCount = allPosts.length;
+const projectsCount = 2;
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="多开心 · DUO KAIXIN">
+  <!-- Hero 部分保持不变 -->
+  <section class="min-h-[calc(100vh-4rem)] flex flex-col justify-center px-6 md:px-12 relative">
+    <p class="text-sm tracking-[0.4em] text-[#a6a6a6] fade-up">HELLO, WORLD.</p>
+
+    <h1 class="mt-8 hero-title select-none fade-up-1">
+      {word.split('').map((ch, i) => (
+        <span class="letter" style={`animation-delay: ${i * 0.08}s`}>{ch}</span>
+      ))}
+      <span class="cursor-blink"></span>
+    </h1>
+
+    <p class="mt-10 text-lg md:text-xl text-white/80 leading-relaxed max-w-2xl fade-up-2">
+      我是多开心。
+      <br />
+      代码、文字、设计与生活，皆是创作的载体。
+    </p>
+
+    <div class="mt-12 flex flex-wrap gap-6 fade-up-3">
+      <a href="/projects/" class="group inline-flex items-center gap-3 text-base tracking-wide hover:text-[#a8322d] transition-colors">
+        <span class="underline-slide">看我的项目</span>
+        <span class="text-[#a8322d] arrow-bob">→</span>
+      </a>
+      <a href="/blog/" class="group inline-flex items-center gap-3 text-base tracking-wide hover:text-[#a8322d] transition-colors">
+        <span class="underline-slide">读我的文章</span>
+        <span class="text-[#a8322d] arrow-bob">→</span>
+      </a>
+      <a href="/about/" class="group inline-flex items-center gap-3 text-base tracking-wide hover:text-[#a8322d] transition-colors">
+        <span class="underline-slide">关于我</span>
+        <span class="text-[#a8322d] arrow-bob">→</span>
+      </a>
+    </div>
+
+    <div class="hairline-scan mt-16 fade-up-4"></div>
+
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#a6a6a6] fade-up-4">
+      <span class="text-[10px] tracking-[0.4em]">SCROLL</span>
+      <span class="scroll-hint">↓</span>
+    </div>
+  </section>
+
+  <!-- 现在在做 -->
+  <section class="px-6 md:px-12 py-32 border-t border-[#3a3a3a]">
+    <div class="reveal flex items-end justify-between">
+      <div>
+        <p class="cn-subtitle !text-left">NOW · 现在在做</p>
+        <h2 class="mt-6 cn-title !text-left"><span class="title-sweep">此刻</span></h2>
+      </div>
+      <a href="/now/" class="text-sm text-[#a6a6a6] hover:text-white transition-colors tracking-wide">更多 →</a>
+    </div>
+
+    <ul class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 reveal">
+      <li class="card-item group relative bg-[#080808] border border-[#1f1f1f] p-8 md:p-10 transition-all duration-500 hover:border-[#a8322d]/60 hover:bg-[#0c0c0c] overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#a8322d] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] tracking-[0.5em] text-[#a8322d]">STUDY</span>
+          <span class="text-xs text-[#3a3a3a] group-hover:text-[#a8322d] transition-colors">01</span>
+        </div>
+        <h3 class="mt-6 font-display text-2xl md:text-3xl font-normal text-white">在学 Python</h3>
+        <p class="mt-3 text-[#a6a6a6] text-sm leading-relaxed">打基础，也在折腾 AI 配置与环境部署。</p>
+      </li>
+
+      <li class="card-item group relative bg-[#080808] border border-[#1f1f1f] p-8 md:p-10 transition-all duration-500 hover:border-[#a8322d]/60 hover:bg-[#0c0c0c] overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#a8322d] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] tracking-[0.5em] text-[#a8322d]">BUILD</span>
+          <span class="text-xs text-[#3a3a3a] group-hover:text-[#a8322d] transition-colors">02</span>
+        </div>
+        <h3 class="mt-6 font-display text-2xl md:text-3xl font-normal text-white">在做「问心之境」</h3>
+        <p class="mt-3 text-[#a6a6a6] text-sm leading-relaxed">情绪数字孪生新消费平台，学院重点孵化项目。</p>
+      </li>
+
+      <li class="card-item group relative bg-[#080808] border border-[#1f1f1f] p-8 md:p-10 transition-all duration-500 hover:border-[#a8322d]/60 hover:bg-[#0c0c0c] overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#a8322d] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] tracking-[0.5em] text-[#a8322d]">COMPETE</span>
+          <span class="text-xs text-[#3a3a3a] group-hover:text-[#a8322d] transition-colors">03</span>
+        </div>
+        <h3 class="mt-6 font-display text-2xl md:text-3xl font-normal text-white">在准备湖大 APP 创意竞赛</h3>
+        <p class="mt-3 text-[#a6a6a6] text-sm leading-relaxed">把想法变成产品。</p>
+      </li>
+
+      <li class="card-item group relative bg-[#080808] border border-[#1f1f1f] p-8 md:p-10 transition-all duration-500 hover:border-[#a8322d]/60 hover:bg-[#0c0c0c] overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#a8322d] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] tracking-[0.5em] text-[#a8322d]">LEARN</span>
+          <span class="text-xs text-[#3a3a3a] group-hover:text-[#a8322d] transition-colors">04</span>
+        </div>
+        <h3 class="mt-6 font-display text-2xl md:text-3xl font-normal text-white">在学前端</h3>
+        <p class="mt-3 text-[#a6a6a6] text-sm leading-relaxed">这个网站就是练习。</p>
+      </li>
+    </ul>
+
+    <!-- 数字统计 -->
+    <div class="mt-16 grid grid-cols-3 gap-px bg-[#3a3a3a] border border-[#3a3a3a] reveal">
+      <div class="bg-black p-8 text-center">
+        <div class="font-display text-5xl font-black text-white">{projectsCount}</div>
+        <div class="mt-3 text-xs text-[#a6a6a6] tracking-[0.3em]">项目</div>
+      </div>
+      <div class="bg-black p-8 text-center">
+        <div class="font-display text-5xl font-black text-white">4</div>
+        <div class="mt-3 text-xs text-[#a6a6a6] tracking-[0.3em]">在做的事</div>
+      </div>
+      <div class="bg-black p-8 text-center">
+        <div class="font-display text-5xl font-black text-white">{postsCount}</div>
+        <div class="mt-3 text-xs text-[#a6a6a6] tracking-[0.3em]">篇文章</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 项目 -->
+  <section class="px-6 md:px-12 py-32 border-t border-[#3a3a3a]">
+    <div class="reveal flex items-end justify-between">
+      <div>
+        <p class="cn-subtitle !text-left">PROJECTS · 项目</p>
+        <h2 class="mt-6 cn-title !text-left"><span class="title-sweep">做过什么</span></h2>
+      </div>
+      <a href="/projects/" class="text-sm text-[#a6a6a6] hover:text-white transition-colors tracking-wide">全部 →</a>
+    </div>
+
+    <a href="/projects/" class="mt-16 block bg-black border border-[#3a3a3a] p-10 md:p-14 group hover:bg-[#0a0a0a] transition-colors relative overflow-hidden sweep tilt reveal">
+      <div class="text-xs text-[#a6a6a6] tracking-[0.3em] text-flow">FEATURED · 2026</div>
+      <h3 class="mt-6 font-display text-3xl md:text-5xl font-bold group-hover:text-[#a8322d] transition-colors">问心之境</h3>
+      <p class="mt-2 text-[#a8322d] tracking-widest text-sm">情绪数字孪生 · 新消费平台</p>
+      <p class="mt-6 text-[#a6a6a6] leading-loose max-w-3xl">
+        计算机学院 & 双创学院重点孵化项目。聚焦青年情绪陪伴、智能文旅推荐赛道，融合多模态情绪识别、AI 数字孪生、情感计算、推荐系统等核心技术。
+      </p>
+    </a>
+  </section>
+
+  <!-- 文章 -->
+  <section class="px-6 md:px-12 py-32 border-t border-[#3a3a3a]">
+    <div class="reveal flex items-end justify-between">
+      <div>
+        <p class="cn-subtitle !text-left">WRITE · 文章</p>
+        <h2 class="mt-6 cn-title !text-left"><span class="title-sweep">写过的</span></h2>
+      </div>
+      <a href="/blog/" class="text-sm text-[#a6a6a6] hover:text-white transition-colors tracking-wide">全部 →</a>
+    </div>
+
+    <div class="mt-16 reveal">
+      {latestPosts.length > 0 ? (
+        <ul class="divide-y divide-[#3a3a3a] border-y border-[#3a3a3a]">
+          {latestPosts.map((post) => (
+            <li>
+              <a href={`/blog/${post.id}/`} class="flex flex-col md:flex-row md:items-baseline justify-between gap-2 py-8 group">
+                <span class="text-2xl md:text-3xl font-display font-normal group-hover:text-[#a8322d] transition-colors">
+                  {post.data.title}
+                </span>
+                <span class="text-sm text-[#a6a6a6] tracking-wide">
+                  {post.data.date.toISOString().slice(0, 10)}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <a href="/blog/" class="block text-[#a6a6a6] py-8 border-y border-[#3a3a3a] hover:text-white transition-colors">
+          还没有文章，去写第一篇 →
+        </a>
+      )}
+    </div>
+  </section>
+</Layout>

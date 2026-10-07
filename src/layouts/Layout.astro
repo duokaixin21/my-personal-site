@@ -1,0 +1,243 @@
+---
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <ClientRouter />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Noto+Serif+SC:wght@300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="min-h-screen noise">
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <div class="bg-aurora">
+      <div class="aurora-blob aurora-1"></div>
+      <div class="aurora-blob aurora-2"></div>
+      <div class="aurora-blob aurora-3"></div>
+    </div>
+
+    <div id="stars"></div>
+
+    <header class="sticky top-0 z-50 backdrop-blur-sm bg-black/70 border-b border-[#3a3a3a]">
+      <div class="max-w-7xl mx-auto flex items-stretch h-16">
+        <div class="hidden md:flex items-stretch">
+          <div class="flex items-center gap-5 px-6">
+            <a href="/" class="text-sm tracking-wide hover:text-[#a6a6a6] transition-colors">首页</a>
+            <div class="vline h-6"></div>
+            <a href="/about/" class="text-sm tracking-wide hover:text-[#a6a6a6] transition-colors">关于</a>
+            <div class="vline h-6"></div>
+            <a href="/projects/" class="text-sm tracking-wide hover:text-[#a6a6a6] transition-colors">项目</a>
+            <div class="vline h-6"></div>
+            <a href="/now/" class="text-sm tracking-wide hover:text-[#a6a6a6] transition-colors">现在</a>
+            <div class="vline h-6"></div>
+            <a href="/blog/" class="text-sm tracking-wide hover:text-[#a6a6a6] transition-colors">文章</a>
+          </div>
+        </div>
+
+        <div class="flex-1 flex items-center justify-center">
+          <a href="/" class="font-display font-bold text-xl tracking-[0.3em] glitch-hover">DUO KAIXIN</a>
+        </div>
+
+        <div class="hidden md:flex items-stretch">
+          <div class="flex items-center gap-4 px-6 text-sm tracking-wide text-[#a6a6a6]">
+            <button id="searchBtn" class="hover:text-white transition-colors cursor-pointer">Search</button>
+            <span class="vline h-4"></span>
+            <button id="menuBtn" class="hover:text-white transition-colors cursor-pointer">Menu</button>
+          </div>
+        </div>
+
+        <div class="md:hidden flex items-center px-6 text-sm tracking-wide">Menu</div>
+      </div>
+    </header>
+
+    <!-- Menu 下拉 -->
+    <div id="menuPanel" class="hidden fixed top-16 right-4 z-[55] bg-black border border-[#3a3a3a] p-6 min-w-[220px] backdrop-blur-md">
+      <a href="/" class="block py-3 text-sm tracking-wide hover:text-[#a8322d] transition-colors border-b border-[#1f1f1f]">首页</a>
+      <a href="/about/" class="block py-3 text-sm tracking-wide hover:text-[#a8322d] transition-colors border-b border-[#1f1f1f]">关于</a>
+      <a href="/projects/" class="block py-3 text-sm tracking-wide hover:text-[#a8322d] transition-colors border-b border-[#1f1f1f]">项目</a>
+      <a href="/now/" class="block py-3 text-sm tracking-wide hover:text-[#a8322d] transition-colors border-b border-[#1f1f1f]">现在</a>
+      <a href="/blog/" class="block py-3 text-sm tracking-wide hover:text-[#a8322d] transition-colors">文章</a>
+    </div>
+
+    <!-- Search 浮层 -->
+    <div id="searchPanel" class="hidden fixed inset-0 z-[70] bg-black/95 backdrop-blur-md">
+      <div class="max-w-2xl mx-auto mt-32 px-6">
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="搜索文章..."
+          class="w-full bg-transparent border-b border-[#3a3a3a] py-4 text-2xl text-white outline-none focus:border-[#a8322d] transition-colors placeholder:text-[#3a3a3a]"
+        />
+        <div id="searchResults" class="mt-8 space-y-2"></div>
+        <button id="searchClose" class="mt-12 text-xs text-[#a6a6a6] tracking-[0.3em] hover:text-white transition-colors">ESC · 关闭</button>
+      </div>
+    </div>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="border-t border-[#3a3a3a] relative overflow-hidden">
+      <div class="marquee py-3 text-xs text-[#a6a6a6] tracking-[0.3em] border-b border-[#3a3a3a]">
+        <span class="px-8">DESIGN</span><span class="px-8">·</span>
+        <span class="px-8">CODE</span><span class="px-8">·</span>
+        <span class="px-8">WRITE</span><span class="px-8">·</span>
+        <span class="px-8">LIFE</span><span class="px-8">·</span>
+        <span class="px-8">DESIGN</span><span class="px-8">·</span>
+        <span class="px-8">CODE</span><span class="px-8">·</span>
+        <span class="px-8">WRITE</span><span class="px-8">·</span>
+        <span class="px-8">LIFE</span><span class="px-8">·</span>
+        <span class="px-8">DESIGN</span><span class="px-8">·</span>
+        <span class="px-8">CODE</span><span class="px-8">·</span>
+        <span class="px-8">WRITE</span><span class="px-8">·</span>
+        <span class="px-8">LIFE</span><span class="px-8">·</span>
+      </div>
+      <div class="max-w-7xl mx-auto px-8 py-10 text-sm text-[#a6a6a6] flex flex-col md:flex-row justify-between gap-4">
+        <span>© 2026 多开心 · DUO KAIXIN</span>
+        <span>Built with Astro</span>
+      </div>
+    </footer>
+
+    <script>
+      function initPage() {
+        // 鼠标光晕
+        const glow = document.getElementById('cursorGlow');
+        document.addEventListener('mousemove', (e) => {
+          if (glow) {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+          }
+        });
+
+        // 星点（避免重复生成）
+        const starContainer = document.getElementById('stars');
+        if (starContainer && starContainer.children.length === 0) {
+          for (let i = 0; i < 40; i++) {
+            const s = document.createElement('div');
+            s.className = 'star';
+            s.style.left = Math.random() * 100 + 'vw';
+            s.style.top = Math.random() * 100 + 'vh';
+            s.style.animationDelay = Math.random() * 3 + 's';
+            s.style.animationDuration = (2 + Math.random() * 3) + 's';
+            starContainer.appendChild(s);
+          }
+        }
+
+        // 极光视差
+        const auroraBlobs = document.querySelectorAll<HTMLElement>('.aurora-blob');
+        document.addEventListener('mousemove', (e) => {
+          const x = (e.clientX / window.innerWidth - 0.5) * 20;
+          const y = (e.clientY / window.innerHeight - 0.5) * 20;
+          auroraBlobs.forEach((blob, i) => {
+            const factor = (i + 1) * 0.6;
+            blob.style.marginLeft = `${x * factor}px`;
+            blob.style.marginTop = `${y * factor}px`;
+          });
+        });
+
+        // reveal + 卡片交错
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              const cards = entry.target.querySelectorAll('.card-item');
+              cards.forEach((card, i) => {
+                setTimeout(() => card.classList.add('visible'), i * 100);
+              });
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.05 });
+
+        document.querySelectorAll('.reveal').forEach((el) => {
+          el.classList.remove('visible');
+          observer.observe(el);
+        });
+        document.querySelectorAll('.card-item').forEach((el) => {
+          el.classList.remove('visible');
+        });
+
+        // Search / Menu
+        const searchBtn = document.getElementById('searchBtn');
+        const menuBtn = document.getElementById('menuBtn');
+        const searchPanel = document.getElementById('searchPanel');
+        const menuPanel = document.getElementById('menuPanel');
+        const searchInput = document.getElementById('searchInput') as HTMLInputElement | null;
+        const searchResults = document.getElementById('searchResults');
+        const searchClose = document.getElementById('searchClose');
+
+        menuBtn?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          menuPanel?.classList.toggle('hidden');
+          searchPanel?.classList.add('hidden');
+        });
+
+        searchBtn?.addEventListener('click', () => {
+          searchPanel?.classList.remove('hidden');
+          menuPanel?.classList.add('hidden');
+          setTimeout(() => searchInput?.focus(), 100);
+        });
+
+        searchClose?.addEventListener('click', () => searchPanel?.classList.add('hidden'));
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            searchPanel?.classList.add('hidden');
+            menuPanel?.classList.add('hidden');
+          }
+        });
+
+        document.addEventListener('click', (e) => {
+          if (menuPanel && !menuPanel.contains(e.target as Node) && e.target !== menuBtn) {
+            menuPanel.classList.add('hidden');
+          }
+        });
+
+        // 搜索过滤
+        if (searchInput && searchResults) {
+          const links = Array.from(document.querySelectorAll('a[href^="/blog/"]')) as HTMLAnchorElement[];
+          const items = links
+            .map((a) => ({ title: a.textContent?.trim() || '', url: a.getAttribute('href') || '' }))
+            .filter((it) => it.title && it.url !== '/blog/');
+          const unique = Array.from(new Map(items.map((it) => [it.url, it])).values());
+
+          searchInput.addEventListener('input', () => {
+            const q = searchInput.value.trim().toLowerCase();
+            if (!q) {
+              searchResults.innerHTML = '';
+              return;
+            }
+            const matched = unique.filter((it) => it.title.toLowerCase().includes(q));
+            searchResults.innerHTML = matched.length
+              ? matched
+                  .map(
+                    (it) =>
+                      `<a href="${it.url}" class="block py-3 text-lg text-white hover:text-[#a8322d] transition-colors border-b border-[#1f1f1f]">${it.title}</a>`
+                  )
+                  .join('')
+              : '<p class="text-[#a6a6a6] text-sm">没有找到相关文章</p>';
+          });
+        }
+      }
+
+      
+      document.addEventListener('astro:page-load', initPage);
+    </script>
+  </body>
+</html>

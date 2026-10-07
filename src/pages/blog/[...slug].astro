@@ -1,0 +1,44 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout title={post.data.title}>
+  <article class="px-8 pt-32 pb-24 max-w-3xl">
+    <div class="text-sm text-[#a6a6a6] tracking-wide">
+      {post.data.date.toISOString().slice(0, 10)}
+    </div>
+    <h1 class="mt-6 font-display font-black leading-[0.95] tracking-tighter text-[2.5rem] md:text-[5rem]">
+      {post.data.title}
+    </h1>
+
+    <div class="mt-12 hairline"></div>
+
+    <div class="mt-12 prose prose-invert max-w-none
+                prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight
+                prose-p:text-[#d4d4d4] prose-p:leading-relaxed
+                prose-a:text-white prose-a:underline
+                prose-strong:text-white
+                prose-code:text-white prose-code:bg-[#1a1a1a] prose-code:px-1 prose-code:py-0.5
+                prose-blockquote:border-l-2 prose-blockquote:border-[#3a3a3a] prose-blockquote:text-[#a6a6a6]">
+      <Content />
+    </div>
+
+    <div class="mt-16 hairline"></div>
+
+    <a href="/blog/" class="mt-8 inline-block text-sm tracking-wide text-[#a6a6a6] hover:text-white transition-colors">
+      ← 返回文章列表
+    </a>
+  </article>
+</Layout>
