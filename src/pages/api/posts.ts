@@ -1,20 +1,15 @@
 import type { APIRoute } from 'astro';
-import { supabase } from '../../lib/supabase';
 
 export const GET: APIRoute = async () => {
-  const { data, error } = await supabase
-    .from('posts')
-    .select('*')
-    .order('created_at', { ascending: false });
+  const url = import.meta.env.PUBLIC_SUPABASE_URL;
+  const key = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 
-  if (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
-
-  return new Response(JSON.stringify(data), {
+  return new Response(JSON.stringify({
+    url: url || '(空)',
+    keyPrefix: key ? key.slice(0, 20) + '...' : '(空)',
+    urlLength: url ? url.length : 0,
+    keyLength: key ? key.length : 0,
+  }), {
     status: 200,
     headers: { 'Content-Type': 'application/json' },
   });
